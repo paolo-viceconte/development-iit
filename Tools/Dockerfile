@@ -150,21 +150,25 @@ RUN cd /tmp &&\
 
 # SWIG with Matlab / Octave support
 # ... waiting its upstream merge
+# RUN apt-get update &&\
+#    apt-get install -y --no-install-recommends \
+#        autotools-dev \
+#        automake \
+#        bison \
+#        libpcre3-dev &&\
+#    rm -rf /var/lib/apt/lists/* &&\
+#    cd /tmp/ &&\
+#    git clone --depth 1 -b matlab https://github.com/robotology-dependencies/swig.git &&\
+#    cd swig &&\
+#    sh autogen.sh &&\
+#    CC=clang-${CLANG_VER} CXX=clang++-${CLANG_VER} ./configure &&\
+#    make -j2 &&\
+#    make install &&\
+#    rm -r /tmp/swig
 RUN apt-get update &&\
-    apt-get install -y --no-install-recommends \
-        autotools-dev \
-        automake \
-        bison \
-        libpcre3-dev &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    cd /tmp/ &&\
-    git clone --depth 1 -b matlab https://github.com/robotology-dependencies/swig.git &&\
-    cd swig &&\
-    sh autogen.sh &&\
-    CC=clang-${CLANG_VER} CXX=clang++-${CLANG_VER} ./configure &&\
-    make -j2 &&\
-    make install &&\
-    rm -r /tmp/swig
+    apt-get install -y --no-install-recommends swig &&\
+    rm -rf /var/lib/apt/lists/*
+
 
 # IWYU
 RUN apt-get update &&\

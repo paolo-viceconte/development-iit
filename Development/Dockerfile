@@ -154,6 +154,7 @@ RUN apt-get update &&\
         # BLOCKFACTORY
         libmatio-dev \
         # MISC
+        libirrlicht-dev \
         liboctave-dev \
         libqt5opengl5-dev \
         libasio-dev &&\
@@ -220,6 +221,7 @@ RUN cd ${IIT_SOURCES}/robotology-superbuild &&\
           -DROBOTOLOGY_ENABLE_ROBOT_TESTING:BOOL=ON \
           -DROBOTOLOGY_ENABLE_HUMAN_DYNAMICS:BOOL=ON \
           -DROBOTOLOGY_USES_GAZEBO:BOOL=ON \
+          -DROBOTOLOGY_USES_PYTHON:BOOL=ON \
           -DROBOTOLOGY_USES_OCTAVE:BOOL=${ROBOTOLOGY_USES_OCTAVE} \
           -DROBOTOLOGY_USES_MATLAB:BOOL=${ROBOTOLOGY_USES_MATLAB} \
           -DNON_INTERACTIVE_BUILD:BOOL=ON \
@@ -232,7 +234,10 @@ RUN cd ${IIT_SOURCES}/robotology-superbuild &&\
     echo "source ${IIT_INSTALL}/share/robotology-superbuild/setup.sh" >> /etc/bash.bashrc &&\
     ln -s ${IIT_SOURCES}/robotology-superbuild/src/YARP/scripts/yarp_completion /etc/bash_completion.d/yarp_completion &&\
     find src/ -type f -not -name 'CMakeCache.txt' -delete &&\
-    find ${IIT_SOURCES}/robotology-superbuild -not -group runtimeusers -exec chgrp runtimeusers {} \; -exec chmod g+rw {} \+
+    find ${IIT_SOURCES}/robotology-superbuild -not -group runtimeusers -exec chgrp runtimeusers {} \; -exec chmod g+rw {} \+ &&\
+    echo 'export PYTHONPATH=$PYTHONPATH:/iit/sources/robotology-superbuild/build/install/lib/python3.8/dist-packages/' >> /etc/bash.bashrc &&\
+    echo 'export PYTHONPATH=$PYTHONPATH:/iit/sources/robotology-superbuild/build/install/lib/python3.8/site-packages/' >> /etc/bash.bashrc
+
 
 # CATCH2
 RUN cd ${IIT_SOURCES}/Catch2 &&\
