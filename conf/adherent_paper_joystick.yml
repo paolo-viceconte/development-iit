@@ -8,9 +8,9 @@ services:
     init: true
     environment:
       - YARP_NAME_SPACE=/pviceconte
-    ports:
-      - 8000:8000
-      - 8888:8888
+    # ports:
+    #   - 8000:8000
+    #   - 8888:8888
     stdin_open: true
     tty: true
     network_mode: "host"
@@ -18,6 +18,9 @@ services:
       - apparmor:unconfined
     devices:
       - "/dev/input/js0:/dev/input/js0"
+    dns:
+      - 8.8.8.8
+
  
 devenv:
   version: '1.0'
